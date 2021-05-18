@@ -4,6 +4,9 @@ import org.apache.tomcat.jdbc.pool.DataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import spring5_db_study.spring.ChangePasswordService;
 import spring5_db_study.spring.MemberDao;
@@ -15,6 +18,7 @@ import spring5_db_study.spring.VersionPrinter;
 
 @Configuration
 @ComponentScan(basePackages = {"spring5_db_study.spring"})
+@EnableTransactionManagement  //@Transaction 애노테이션이 붙은 메서드를 트랜잭션 범위에서 실행하는 기능을 활성화
 public class AppCtx {
 	
     @Bean(destroyMethod = "close")
@@ -33,7 +37,13 @@ public class AppCtx {
         return ds;
     }
 
-    
+    @Bean
+    public PlatformTransactionManager transactionMangager() {
+        DataSourceTransactionManager tm = new DataSourceTransactionManager();
+        tm.setDataSource(dataSource());
+        return tm;
+    }
+
 	@Bean
 	public MemberDao memberDao() {
 		return new MemberDao();
