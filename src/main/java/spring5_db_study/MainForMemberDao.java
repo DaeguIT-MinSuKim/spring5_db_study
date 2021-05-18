@@ -23,11 +23,11 @@ public class MainForMemberDao {
 //            System.out.println(ds);
 //            
             memberDao = ctx.getBean(MemberDao.class);
-            memberDao.insert(new Member("test@test.co.kr", "1234", "test", LocalDateTime.now()));
-            System.out.println("회원을 추가했습니다.\n");
+//            memberDao.insert(new Member("test@test.co.kr", "1234", "test", LocalDateTime.now()));
+//            System.out.println("회원을 추가했습니다.\n");
 
             ChangePasswordService cps = ctx.getBean(ChangePasswordService.class);
-            cps.changePassword("test@test.co.kr", "123", "new1234");
+            cps.changePassword("test@test.co.kr", "1234", "new1234");
             System.out.println("암호를 변경했습니다.\n");
 
             Member member = memberDao.selectByEmail("test@test.co.kr");
